@@ -308,6 +308,12 @@ static Future<void> removeVerfication() async {
     );
   }
 
+
+  static Future<void> saveLocation(double latitude, double longitude) async {
+    await setLat(latitude);
+    await setLng(longitude);
+  }
+
   static showError(BuildContext context,
       {String msg = "Something went wrong"}) {
     return Container(

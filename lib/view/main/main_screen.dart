@@ -646,19 +646,48 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> _requestLocationWithUI() async {
     try {
-      // التحقق من الحالة الحالية
+      // Mostrar indicador de carga
+      controller.isLocationLoading.value = true;
+
+      // Verificar si ya tenemos permisos
       if (controller.isLocationPermissionGranted.value) {
-        // الصلاحيات ممنوحة - تحديث الموقع مباشرة
+        // Permisos concedidos - actualizar ubicación directamente
         await controller.getCurrentLocationAndUpdateMap();
+
+        // Mostrar el mapa y centrar en la ubicación actual
+        controller.showMap.value = true;
+        controller.showLocation.value = false;
+        controller.showRestaurantInfo.value = false;
+
+        // Actualizar la interfaz
+        controller.update();
+
+        // Mostrar mensaje de éxito
+        Get.snackbar(
+          'location_success'.tr,
+          'location_updated_successfully'.tr,
+          backgroundColor: AppColors.green.withOpacity(0.8),
+          colorText: AppColors.white,
+          icon: Icon(Icons.check_circle, color: AppColors.white),
+          duration: Duration(seconds: 2),
+        );
       } else {
-        // طلب الصلاحيات مع واجهة المستخدم
+        // Solicitar permisos con UI
         bool granted = await controller.requestLocationPermissionsWithUI(context);
 
         if (granted) {
-          // تم منح الصلاحيات - تحديث الموقع
+          // Permisos concedidos - obtener ubicación y actualizar mapa
           await controller.getCurrentLocationAndUpdateMap();
 
-          // إظهار رسالة نجاح
+          // Mostrar el mapa y centrar en la ubicación actual
+          controller.showMap.value = true;
+          controller.showLocation.value = false;
+          controller.showRestaurantInfo.value = false;
+
+          // Actualizar la interfaz
+          controller.update();
+
+          // Mostrar mensaje de éxito
           Get.snackbar(
             'location_success'.tr,
             'location_updated_successfully'.tr,
@@ -668,7 +697,7 @@ class _MainScreenState extends State<MainScreen> {
             duration: Duration(seconds: 2),
           );
         } else {
-          // لم يتم منح الصلاحيات - إظهار رسالة
+          // Permisos denegados - mostrar mensaje
           Get.snackbar(
             'location_permission_required'.tr,
             'location_permission_needed_message'.tr,
@@ -680,9 +709,9 @@ class _MainScreenState extends State<MainScreen> {
         }
       }
     } catch (e) {
-      print('❌ خطأ في طلب الموقع: $e');
+      print('❌ Error al solicitar ubicación: $e');
 
-      // إظهار رسالة خطأ
+      // Mostrar mensaje de error
       Get.snackbar(
         'location_error'.tr,
         'failed_to_get_location'.tr,
@@ -691,6 +720,9 @@ class _MainScreenState extends State<MainScreen> {
         icon: Icon(Icons.error, color: AppColors.white),
         duration: Duration(seconds: 3),
       );
+    } finally {
+      // Ocultar indicador de carga
+      controller.isLocationLoading.value = false;
     }
   }
 }

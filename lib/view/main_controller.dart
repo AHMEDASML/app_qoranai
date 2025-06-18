@@ -4,6 +4,7 @@ import 'package:Al_Arqam/core/resources/global_functions.dart';
 import 'package:Al_Arqam/models/medicin/all_medicins_model.dart';
 import 'package:Al_Arqam/models/medicin/data_source/medicins_reminder_data_source.dart';
 import 'package:Al_Arqam/view/current_location_helper.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:Al_Arqam/core/enums/locations_enum.dart';
@@ -766,6 +767,91 @@ Location Link: ${'https://www.google.com/maps/search/?api=1&query=${GlobalFuncti
         ),
       );
     }
+  }
+
+  Future<bool> requestLocationPermissionsWithUI(BuildContext context) async {
+    try {
+      // التحقق من حالة الإذن الحالي
+      LocationPermission permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        // طلب الإذن
+        permission = await Geolocator.requestPermission();
+
+        if (permission == LocationPermission.denied) {
+          // عرض رسالة إذا تم الرفض
+          _showPermissionDialog(
+            context,
+            "إذن الموقع مرفوض",
+            "يرجى السماح للتطبيق بالوصول إلى موقعك.",
+                () => Geolocator.openAppSettings(),
+          );
+          return false;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        // إذا تم رفض الإذن بشكل دائم
+        _showPermissionDialog(
+          context,
+          "إذن الموقع مرفوض نهائيًا",
+          "لقد منعت الإذن بشكل دائم، الرجاء تفعيله من إعدادات التطبيق.",
+              () => Geolocator.openAppSettings(),
+        );
+        return false;
+      }
+
+      // التحقق من تشغيل خدمة الموقع
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        _showPermissionDialog(
+          context,
+          "خدمة الموقع غير مفعلة",
+          "يرجى تفعيل خدمة الموقع من الإعدادات.",
+              () => Geolocator.openLocationSettings(),
+        );
+        return false;
+      }
+
+      // تحديث حالة الأذونات
+      isLocationPermissionGranted.value =
+          permission == LocationPermission.always ||
+              permission == LocationPermission.whileInUse;
+
+      return isLocationPermissionGranted.value;
+    } catch (e) {
+      print('❌ خطأ في طلب صلاحيات الموقع: $e');
+      return false;
+    }
+  }
+
+
+  void _showPermissionDialog(
+      BuildContext context,
+      String title,
+      String message,
+      VoidCallback onPressed
+      ) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("إلغاء"),
+          ),
+          TextButton(
+            onPressed: () {
+              onPressed();
+              Navigator.pop(context);
+            },
+            child: const Text("فتح الإعدادات"),
+          ),
+        ],
+      ),
+    );
   }
 
 
