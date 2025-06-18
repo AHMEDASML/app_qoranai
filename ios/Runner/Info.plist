@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+   <!-- ✅ إعدادات Bundle الأساسية -->
+   <key>CFBundleDevelopmentRegion</key>
+   <string>$(DEVELOPMENT_LANGUAGE)</string>
+   <key>CFBundleDisplayName</key>
+   <string>Al Arqam</string>
+   <key>CFBundleExecutable</key>
+   <string>$(EXECUTABLE_NAME)</string>
+   <key>CFBundleIdentifier</key>
+   <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+   <key>CFBundleInfoDictionaryVersion</key>
+   <string>6.0</string>
+   <key>CFBundleName</key>
+   <string>Al_Arqam</string>
+   <key>CFBundlePackageType</key>
+   <string>APPL</string>
+   <key>CFBundleShortVersionString</key>
+   <string>$(FLUTTER_BUILD_NAME)</string>
+   <key>CFBundleSignature</key>
+   <string>????</string>
+   <key>CFBundleVersion</key>
+   <string>$(FLUTTER_BUILD_NUMBER)</string>
+
+   <!-- ✅ أذونات الموقع الشاملة والمفصلة (الأهم للمشكلة) -->
+   <key>NSLocationWhenInUseUsageDescription</key>
+   <string>يحتاج تطبيق الأرقام إلى إذن الموقع لعرض أوقات الصلاة الدقيقة حسب موقعك الحالي، وتوفير التنقل إلى الأماكن المقدسة والمطاعم القريبة، وعرض الخرائط التفاعلية لخدمة الحجاج والمعتمرين.</string>
+
+   <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+   <string>يحتاج تطبيق الأرقام إلى إذن الموقع للوصول المستمر لعرض أوقات الصلاة الدقيقة حسب موقعك الحالي، وتوفير التنقل إلى الأماكن المقدسة، وإرسال رسائل الطوارئ مع الموقع الحالي، وتحديث البيانات حتى عندما يكون التطبيق في الخلفية.</string>
+
+   <key>NSLocationAlwaysUsageDescription</key>
+   <string>يحتاج تطبيق الأرقام إلى إذن الموقع المستمر لإرسال إشعارات أوقات الصلاة الدقيقة وتحديث البيانات الدينية حسب موقعك حتى عندما يكون التطبيق في الخلفية.</string>
+
+   <!-- ✅ إذن الموقع المؤقت (ميزة iOS 14+) -->
+   <key>NSLocationTemporaryUsageDescriptionDictionary</key>
+   <dict>
+      <key>PreciseLocationPrompt</key>
+      <string>للحصول على موقعك الحالي بدقة عالية لحساب أوقات الصلاة الدقيقة وتوفير خدمات التنقل المناسبة</string>
+   </dict>
+
+   <!-- ✅ إعدادات دقة الموقع الافتراضية -->
+   <key>NSLocationDefaultAccuracyReduced</key>
+   <false/>
+
+   <!-- ✅ إعدادات الشبكة والأمان -->
+   <key>NSAppTransportSecurity</key>
+   <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+      <key>NSAllowsArbitraryLoadsInWebContent</key>
+      <true/>
+      <key>NSAllowsLocalNetworking</key>
+      <true/>
+      <!-- إضافة استثناءات للخرائط وأوقات الصلاة -->
+      <key>NSExceptionDomains</key>
+      <dict>
+         <key>maps.googleapis.com</key>
+         <dict>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+            <key>NSExceptionMinimumTLSVersion</key>
+            <string>TLSv1.0</string>
+            <key>NSIncludesSubdomains</key>
+            <true/>
+         </dict>
+         <key>api.aladhan.com</key>
+         <dict>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+            <key>NSExceptionMinimumTLSVersion</key>
+            <string>TLSv1.0</string>
+            <key>NSIncludesSubdomains</key>
+            <true/>
+         </dict>
+      </dict>
+   </dict>
+
+   <!-- ✅ إعدادات دعم الخلفية المحسنة للموقع -->
+   <key>UIBackgroundModes</key>
+   <array>
+      <string>location</string>
+      <string>background-processing</string>
+      <string>background-fetch</string>
+      <string>remote-notification</string>
+   </array>
+
+   <!-- ✅ أذونات إضافية ضرورية للتطبيق -->
+   <key>NSPhotoLibraryUsageDescription</key>
+   <string>يحتاج تطبيق الأرقام للوصول إلى مكتبة الصور لحفظ ومشاركة المحتوى الديني والآيات القرآنية والأدعية.</string>
+
+   <key>NSCameraUsageDescription</key>
+   <string>يحتاج تطبيق الأرقام للوصول إلى الكاميرا لتصوير النصوص الدينية أو المشاركة في ميزات التطبيق التفاعلية.</string>
+
+   <key>NSMicrophoneUsageDescription</key>
+   <string>يحتاج تطبيق الأرقام للوصول إلى الميكروفون لتسجيل الأدعية الشخصية أو الاستفادة من ميزات الصوت في التطبيق.</string>
+
+   <!-- ✅ إعدادات الإشعارات -->
+   <key>NSUserNotificationsUsageDescription</key>
+   <string>يحتاج تطبيق الأرقام لإرسال الإشعارات لتذكيرك بأوقات الصلاة وتناول الأدوية والمناسبات الدينية المهمة.</string>
+
+   <!-- ✅ إعدادات الشاشة والواجهة -->
+   <key>UIApplicationSupportsIndirectInputEvents</key>
+   <true/>
+
+   <key>UIDeviceFamily</key>
+   <array>
+      <integer>1</integer>
+      <integer>2</integer>
+   </array>
+
+   <key>UILaunchStoryboardName</key>
+   <string>LaunchScreen</string>
+   <key>UIMainStoryboardFile</key>
+   <string>Main</string>
+
+   <key>UIStatusBarStyle</key>
+   <string>UIStatusBarStyleDefault</string>
+   <key>UIViewControllerBasedStatusBarAppearance</key>
+   <false/>
+
+   <!-- ✅ إعدادات الاتجاهات المدعومة -->
+   <key>UISupportedInterfaceOrientations</key>
+   <array>
+      <string>UIInterfaceOrientationPortrait</string>
+   </array>
+
+   <key>UISupportedInterfaceOrientations~ipad</key>
+   <array>
+      <string>UIInterfaceOrientationPortrait</string>
+      <string>UIInterfaceOrientationPortraitUpsideDown</string>
+      <string>UIInterfaceOrientationLandscapeLeft</string>
+      <string>UIInterfaceOrientationLandscapeRight</string>
+   </array>
+
+   <!-- ✅ إعدادات أمان أساسية -->
+   <key>ITSAppUsesNonExemptEncryption</key>
+   <false/>
+
+   <key>LSRequiresIPhoneOS</key>
+   <true/>
+
+   <key>UIRequiresFullScreen</key>
+   <false/>
+
+   <!-- ✅ إعدادات الملفات والوثائق -->
+   <key>LSSupportsOpeningDocumentsInPlace</key>
+   <true/>
+   <key>UIFileSharingEnabled</key>
+   <true/>
+
+   <!-- ✅ إعدادات اللغة -->
+   <key>CFBundleLocalizations</key>
+   <array>
+      <string>ar</string>
+      <string>en</string>
+   </array>
+
+   <!-- ✅ دعم الأداء -->
+   <key>CADisableMinimumFrameDurationOnPhone</key>
+   <true/>
+
+   <!-- ✅ إعدادات إضافية لـ iOS 14+ -->
+   <key>NSUserTrackingUsageDescription</key>
+   <string>يساعد هذا المعرف في تحسين تجربتك مع التطبيق وتقديم محتوى ديني مخصص لك.</string>
+
+   <key>NSLocalNetworkUsageDescription</key>
+   <string>يحتاج تطبيق الأرقام للوصول إلى الشبكة المحلية لمزامنة البيانات الدينية مع الأجهزة الأخرى.</string>
+
+   <!-- ✅ إعدادات الخطوط العربية -->
+   <key>UIAppFonts</key>
+   <array>
+      <string>NotoKufiArabic-Regular.ttf</string>
+      <string>NotoKufiArabic-Bold.ttf</string>
+   </array>
+
+   <!-- ✅ إعدادات الأمان للبيانات الحساسة -->
+   <key>NSSupportsSecureCoding</key>
+   <true/>
+
+   <!-- ✅ إعدادات إضافية للموقع في iOS -->
+   <key>CLKLocationDefaultAccuracyReduced</key>
+   <false/>
+
+</dict>
+</plist>

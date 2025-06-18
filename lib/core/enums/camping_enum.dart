@@ -1,0 +1,1 @@
+enum CampingEnum { program, guide }

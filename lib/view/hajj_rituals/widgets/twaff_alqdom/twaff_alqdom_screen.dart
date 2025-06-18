@@ -1,0 +1,207 @@
+import 'package:Al_Arqam/core/app/general_widgets/custom_app_bar.dart';
+import 'package:Al_Arqam/core/app/general_widgets/custom_back.dart';
+import 'package:Al_Arqam/core/app/general_widgets/custom_button.dart';
+import 'package:Al_Arqam/core/app/general_widgets/custom_forword.dart';
+import 'package:Al_Arqam/core/app/general_widgets/custom_trailing.dart';
+import 'package:Al_Arqam/core/app/general_widgets/custom_type.dart';
+import 'package:Al_Arqam/core/enums/hajj_enum.dart';
+import 'package:Al_Arqam/core/enums/hajj_rituals_enum.dart';
+import 'package:Al_Arqam/core/resources/color_manager.dart';
+import 'package:Al_Arqam/core/resources/routes_manager.dart';
+import 'package:Al_Arqam/view/hajj_rituals/controller/hajj_rituals_controller.dart';
+import 'package:Al_Arqam/view/hajj_rituals/individual_hajj_screen.dart';
+import 'package:Al_Arqam/view/hajj_rituals/tamtao_hajj_screen.dart';
+import 'package:Al_Arqam/view/hajj_rituals/widgets/twaff_alqdom/dwaa_twaff_alqdom_quran_widget.dart';
+import 'package:Al_Arqam/view/hajj_rituals/widgets/twaff_alqdom/dwaa_twaff_alqdom_widget.dart';
+import 'package:Al_Arqam/view/hajj_rituals/widgets/twaff_alqdom/mistakes_twaff_alqdom_widget.dart';
+import 'package:Al_Arqam/view/hajj_rituals/widgets/twaff_alqdom/text_twaff_alqdom_widget.dart';
+import 'package:Al_Arqam/view/hajj_rituals/widgets/twaff_alqdom/text_twaff_tamtoa_widget.dart';
+import 'package:Al_Arqam/view/main_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+// ignore: must_be_immutable
+class TwaffAlqdomScreen extends StatefulWidget {
+  TwaffAlqdomScreen({super.key});
+
+
+
+  @override
+  State<TwaffAlqdomScreen> createState() => _TwaffAlqdomScreenState();
+}
+ HajjRitualsController hajjController = Get.put(HajjRitualsController());
+class _TwaffAlqdomScreenState extends State<TwaffAlqdomScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<HajjRitualsController>(
+      builder: (hajjController) {
+        return PopScope(
+           canPop: false,
+          onPopInvoked:(_){
+            if(hajjController.selectedTabHajj.value ==
+                                            HajjEnum.tamtoa){
+  Get.to(TamtaoHajjScreen());
+                                            }else if(hajjController.selectedTabHajj.value ==
+                                            HajjEnum.umrah){
+ Navigator.of(context).pushNamed(AppRoutesPath.AmraaRitualsScreen);
+
+                                            }
+            
+              else {Get.to(IndividualHajjScreen());}
+               
+          },
+          child: Scaffold(
+            backgroundColor: AppColors.whiteBackground,
+            appBar: CustomAppBar(
+              backgroundColor: AppColors.whiteBackground,
+              onTap:(){
+                 if(hajjController.selectedTabHajj.value ==
+                                            HajjEnum.tamtoa){
+  Get.to(TamtaoHajjScreen());
+                                            }else if(hajjController.selectedTabHajj.value ==
+                                            HajjEnum.umrah){
+ Navigator.of(context).pushNamed(AppRoutesPath.AmraaRitualsScreen);
+
+                                            }
+            
+              else {Get.to(IndividualHajjScreen());}
+              },
+              subTitle: hajjController.selectedTabHajj.value == HajjEnum.tamtoa|| hajjController.selectedTabHajj.value == HajjEnum.umrah?'tawaf_of_umrah'.tr:'tawaf_alqdom_title'.tr,
+             isManask: true,
+             
+              title:
+               hajjController.selectedTabHajj.value == HajjEnum.umrah?
+                   'rituals_of_umrah'.tr:
+              hajjController.selectedTabHajj.value==HajjEnum.person?
+              
+               'individual_hajj'.tr:
+                hajjController.selectedTabHajj.value==HajjEnum.tamtoa?
+                'tamattu_hajj'.tr:
+                'qiran_hajj'.tr,
+              triling:CustomTrailing()
+            ),
+            body: GetBuilder<MainController>(
+              builder: (controller) {
+                return Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 0.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              Container(
+                                height: 1.h,
+                                color: AppColors.greyVerfication,
+                              ),
+                              Container(
+                                height: 200.h,
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: AssetImage("assets/images/twaffalqdom.jpeg"),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              Padding(
+                                padding: EdgeInsets.all(10.w),
+                                child: Container(
+                                  height: 55.h,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.containerGrey,
+                                    borderRadius: BorderRadius.circular(25.r),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomTap(
+                                        width: 125.w,
+                                        color: hajjController.selectedalqdomTab.value == twaffAlqdomEnum.text
+                                            ? AppColors.primary
+                                            : AppColors.containerGrey,
+                                        text: "explanation_of_ritual".tr,
+                                        textColor: hajjController.selectedalqdomTab.value == twaffAlqdomEnum.text
+                                            ? AppColors.white
+                                            : AppColors.textSecoundary,
+                                        onTap: () {
+                                          hajjController.changeTabAlqdom(twaffAlqdomEnum.text);
+                                          hajjController.update();
+                                        },
+                                      ),
+                                      CustomTap(
+                                        width: 125.w,
+                                        color: hajjController.selectedalqdomTab.value == twaffAlqdomEnum.mistakes
+                                            ? AppColors.primary
+                                            : AppColors.containerGrey,
+                                        text: "mistakes_of_ritual".tr,
+                                        textColor: hajjController.selectedalqdomTab.value == twaffAlqdomEnum.mistakes
+                                            ? AppColors.white
+                                            : AppColors.textSecoundary,
+                                        onTap: () {
+                                          hajjController.changeTabAlqdom(twaffAlqdomEnum.mistakes);
+                                          hajjController.update();
+                                        },
+                                      ),
+                                      CustomTap(
+                                        width: 125.w,
+                                        color: hajjController.selectedalqdomTab.value == twaffAlqdomEnum.dwaa
+                                            ? AppColors.primary
+                                            : AppColors.containerGrey,
+                                        text: "dua_of_ritual".tr,
+                                        textColor: hajjController.selectedalqdomTab.value == twaffAlqdomEnum.dwaa
+                                            ? AppColors.white
+                                            : AppColors.textSecoundary,
+                                        onTap: () {
+                                          hajjController.changeTabAlqdom(twaffAlqdomEnum.dwaa);
+                                          hajjController.update();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Container(
+                                margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+                                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+                                decoration: BoxDecoration(
+                                  color: AppColors.containerGrey,
+                                  borderRadius: BorderRadius.circular(20.r),
+                                ),
+                                child: hajjController.selectedalqdomTab.value == twaffAlqdomEnum.mistakes
+                                    ? const MistakesTwaffAlqdomWidget()
+                                    : hajjController.selectedalqdomTab.value == twaffAlqdomEnum.dwaa
+                                        ?hajjController.selectedTabHajj.value != HajjEnum.person?
+                          
+                                        const DwaaTwaffAlqdomQuranWidget():
+                                         const DwaaTwaffAlqdomWidget()
+                                        :hajjController.selectedTabHajj.value == HajjEnum.tamtoa|| hajjController.selectedTabHajj.value == HajjEnum.umrah?
+                                         const TextTwaffTamtoaWidget():
+                                         TextTwaffAlqdomWidget(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                
+                 CustomForword(),
+                   
+                   CustomBack(),
+                
+                  ],
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

@@ -1,0 +1,1 @@
+enum RecorderSupplicationsEnum { sunnah,quran }

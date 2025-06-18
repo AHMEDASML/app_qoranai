@@ -1,0 +1,1 @@
+enum AskCampingMuftiEnum { myquestions, fatwas }

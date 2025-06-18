@@ -1,0 +1,1 @@
+enum HajjEnum { person, quran, tamtoa,umrah }

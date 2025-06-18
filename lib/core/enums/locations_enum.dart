@@ -1,0 +1,1 @@
+enum LocationsEnum { locations, resturants, places }

@@ -1,0 +1,1 @@
+enum CrowadingTypes { tawaf, saee, jamarat }
